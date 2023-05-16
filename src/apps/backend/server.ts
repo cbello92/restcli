@@ -5,6 +5,7 @@ import * as http from 'http';
 import helmet from 'helmet';
 import {Routes} from './routes';
 import {MongoDbConnection} from '../../Contexts/shared/infrastructure/persistence/mongoose/MongoDbConnection';
+import errorHandler from './middlewares/errorHandler';
 
 export class ServerApplication {
   public server: Application;
@@ -32,6 +33,7 @@ export class ServerApplication {
     this.server.use(express.json());
     this.server.use(express.urlencoded({extended: true}));
     this.server.use(this.BASE_PATH, this.appRoutes.routes());
+    this.server.use(errorHandler);
     if (process.env.NODE_ENV !== 'test') {
       this.database.run();
     }
