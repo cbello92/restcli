@@ -1,6 +1,6 @@
 import {PersistenceBaseRepository} from '../../../shared/domain/PersistenceBaseRepository';
-import {CreateWorkSpace} from '../domain/CreateWorkSpace';
-import {WorkSpaceResponse} from '../domain/WorkSpaceResponse';
+import {CreateWorkSpace} from '../domain/repository/CreateWorkSpace';
+import {WorkSpaceResponse} from '../domain/response/WorkSpaceResponse';
 import {WorkSpace} from '../domain/entity/WorkSpace';
 
 export class CreateWorkSpaceUseCase implements CreateWorkSpace<WorkSpace, WorkSpaceResponse> {
