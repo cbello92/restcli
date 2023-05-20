@@ -1,14 +1,14 @@
 import {Router} from 'express';
-import {WorkSpaceRepository} from '../../../Contexts/Backoffice/Workspace/infrastructure/mongoose/schema/WorkSpaceRepository';
 import {GetWorkSpacesUseCase} from '../../../Contexts/Backoffice/Workspace/application/GetWorkSpacesUseCase';
 import {CreateWorkSpaceUseCase} from '../../../Contexts/Backoffice/Workspace/application/CreateWorkSpaceUseCase';
 import {CreateWorkSpaceController} from '../controllers/workspace/createWorkSpace.controller';
 import {GetWorkSpaceController} from '../controllers/workspace/getWorkspace.controller';
 import {UpdateWorkSpaceUseCase} from '../../../Contexts/Backoffice/Workspace/application/UpdateWorkSpaceUseCase';
 import {UpdateWorkSpaceController} from '../controllers/workspace/updateWorkSpace.controller';
+import {MongoWorkSpaceRepository} from '../../../Contexts/Backoffice/Workspace/infrastructure/mongoose/schema/MongoWorkSpaceRepository';
 
 const router = Router();
-const repository = new WorkSpaceRepository();
+const repository = new MongoWorkSpaceRepository();
 const useCase = new GetWorkSpacesUseCase(repository);
 const getWorkSpaceCtrl = new GetWorkSpaceController(useCase);
 

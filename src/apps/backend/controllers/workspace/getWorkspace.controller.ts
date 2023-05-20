@@ -1,10 +1,9 @@
 import {Request, Response, NextFunction} from 'express';
 import {ControllerBase} from '../../../../Contexts/shared/infrastructure/controller/ControllerBase';
-import {GetWorkSpace} from '../../../../Contexts/Backoffice/Workspace/domain/repository/GetWorkSpace';
-import {WorkSpaceResponse} from '../../../../Contexts/Backoffice/Workspace/domain/response/WorkSpaceResponse';
+import {GetWorkSpace} from '../../../../Contexts/Backoffice/Workspace/domain/GetWorkSpace';
 
 export class GetWorkSpaceController implements ControllerBase {
-  constructor(private getWorkSpaceUsecase: GetWorkSpace<Array<WorkSpaceResponse>>) {}
+  constructor(private getWorkSpaceUsecase: GetWorkSpace) {}
 
   async run(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {

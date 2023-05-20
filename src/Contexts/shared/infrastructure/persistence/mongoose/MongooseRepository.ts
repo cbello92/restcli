@@ -8,9 +8,8 @@ import {
   UpdateQuery,
   QueryOptions,
 } from 'mongoose';
-import {PersistenceBaseRepository} from '../../../domain/PersistenceBaseRepository';
 
-export class MongooseRepository implements PersistenceBaseRepository {
+export class MongooseRepository {
   constructor(private model: Model<Document>) {}
 
   persist<T, V>(data: T): Promise<V> {
