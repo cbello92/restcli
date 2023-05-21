@@ -5,7 +5,7 @@ import {CreateWorkSpaceController} from '../controllers/workspace/createWorkSpac
 import {GetWorkSpaceController} from '../controllers/workspace/getWorkspace.controller';
 import {UpdateWorkSpaceUseCase} from '../../../Contexts/Backoffice/Workspace/application/UpdateWorkSpaceUseCase';
 import {UpdateWorkSpaceController} from '../controllers/workspace/updateWorkSpace.controller';
-import {MongoWorkSpaceRepository} from '../../../Contexts/Backoffice/Workspace/infrastructure/mongoose/schema/MongoWorkSpaceRepository';
+import {MongoWorkSpaceRepository} from '../../../Contexts/Backoffice/Workspace/infrastructure/mongoose/MongoWorkSpaceRepository';
 
 const router = Router();
 const repository = new MongoWorkSpaceRepository();

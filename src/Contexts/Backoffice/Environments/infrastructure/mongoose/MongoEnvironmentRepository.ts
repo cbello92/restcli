@@ -1,9 +1,9 @@
 import {ObjectId} from 'mongodb';
-import {MongooseRepository} from '../../../../../shared/infrastructure/persistence/mongoose/MongooseRepository';
-import {Environment} from '../../../domain/entity/Environment';
-import {EnvironmentRepository} from '../../../domain/repository/EnvironmentRepository';
-import {EnvironmentResponse} from '../../../domain/response/EnvironmentResponse';
-import EnvironmentSchema from './EnvironmentSchema';
+import {MongooseRepository} from '../../../../shared/infrastructure/persistence/mongoose/MongooseRepository';
+import {Environment} from '../../domain/entity/Environment';
+import {EnvironmentRepository} from '../../domain/repository/EnvironmentRepository';
+import {EnvironmentResponse} from '../../domain/response/EnvironmentResponse';
+import EnvironmentSchema from './schema/EnvironmentSchema';
 
 export class MongoEnvironmentRepository extends MongooseRepository implements EnvironmentRepository {
   constructor() {
