@@ -1,3 +1,5 @@
-export class WorkSpace {
-  constructor(private name: string, private description: string) {}
+export interface WorkSpace {
+  id?: string;
+  name: string;
+  description: string;
 }

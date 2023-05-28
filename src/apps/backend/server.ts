@@ -1,19 +1,17 @@
+import cors from 'cors';
+import * as trpcExpress from '@trpc/server/adapters/express';
 import express, {Application} from 'express';
-import actuator from 'express-actuator';
-import cors, {CorsOptions, CorsOptionsDelegate} from 'cors';
 import * as http from 'http';
-import helmet from 'helmet';
 import {Routes} from './routes';
 import {MongoDbConnection} from '../../Contexts/shared/infrastructure/persistence/mongoose/MongoDbConnection';
-import errorHandler from './middlewares/errorHandler';
+import {createContext} from './trpc/trpc-config';
+import {appRouter} from './trpc';
 
 export class ServerApplication {
   public server: Application;
   private httpServer?: http.Server;
   private port: number;
   public appRoutes: Routes = new Routes();
-  private BASE_PATH: string = process.env.BASE_PATH ?? '/api';
-  private corsOptions: CorsOptions | CorsOptionsDelegate | undefined;
   public database: MongoDbConnection = new MongoDbConnection();
 
   constructor(port: number) {
@@ -23,17 +21,8 @@ export class ServerApplication {
   }
 
   private config(): void {
-    this.corsOptions = {
-      origin: process.env.NODE_ENV === 'production' ? process.env.CORS_ORIGIN : '*',
-      optionsSuccessStatus: 200,
-    };
-    this.server.use(cors(this.corsOptions));
-    this.server.use(helmet());
-    this.server.use(actuator());
-    this.server.use(express.json());
-    this.server.use(express.urlencoded({extended: true}));
-    this.server.use(this.BASE_PATH, this.appRoutes.routes());
-    this.server.use(errorHandler);
+    this.server.use(cors());
+    this.server.use('/trpc', trpcExpress.createExpressMiddleware({router: appRouter, createContext}));
     if (process.env.NODE_ENV !== 'test') {
       this.database.run();
     }
