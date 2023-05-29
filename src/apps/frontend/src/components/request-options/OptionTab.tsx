@@ -4,8 +4,8 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import Param from './Param';
 import Header from './Header';
+import ParamList from './params/ParamList';
 
 export default function OptionTab() {
   const [value, setValue] = React.useState('1');
@@ -26,7 +26,8 @@ export default function OptionTab() {
           </TabList>
         </Box>
         <TabPanel value="1">
-          <Param />
+          {/* <Param /> */}
+          <ParamList />
         </TabPanel>
         <TabPanel value="2">
           <Header />

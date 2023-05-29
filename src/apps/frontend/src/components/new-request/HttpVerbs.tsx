@@ -14,12 +14,11 @@ export default function HttpVerbs() {
   const {data} = useGetVerbsQuery();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const [optionSelected, setOptionSelected] = React.useState<VerbHttpResponse>({name: 'GET', color: '#00ff00'});
+  const [optionSelected, setOptionSelected] = React.useState<VerbHttpResponse>({name: 'GET', color: '#73DC8C'});
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = (event: React.MouseEvent<HTMLElement>) => {
-    console.log(event.currentTarget.textContent);
     if (event.currentTarget.textContent) {
       const option = data?.find(verb => verb.name === event.currentTarget.textContent) as VerbHttpResponse;
       setOptionSelected(option);
