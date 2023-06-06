@@ -7,6 +7,6 @@ export class DeleteEndpointExecutor implements EndpointStrategy {
   constructor(private httpClient: HttpClientBaseRepository) {}
 
   async execute(url: string, dataAction: OptionsAction): Promise<any> {
-    return this.httpClient.put(url, {...dataAction});
+    return this.httpClient.delete(url, {...dataAction});
   }
 }
