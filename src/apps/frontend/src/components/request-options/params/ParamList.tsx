@@ -1,9 +1,7 @@
 /* eslint-disable no-unused-vars */
-import dynamic from 'next/dynamic';
+import {Divider} from '@mui/material';
 import {useAppSelector} from '../../../redux/hooks';
-// import Param from './Param';
-
-const Param = dynamic(() => import('./Param'), {ssr: false});
+import Param from './Param';
 
 const ParamList = () => {
   const params = useAppSelector(state => state.paramReducer.value);
@@ -11,7 +9,10 @@ const ParamList = () => {
     <div>
       {params.length > 0 &&
         params.map((param, index) => (
-          <Param key={`param${index}`} id={param.id} checked={param.checked} name={param.name} value={param.value} />
+          <div key={index}>
+            <Param key={`param${index}`} id={param.id} checked={param.checked} name={param.name} value={param.value} />
+            <Divider />
+          </div>
         ))}
     </div>
   );

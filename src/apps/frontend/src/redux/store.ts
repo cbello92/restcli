@@ -1,11 +1,19 @@
 import {configureStore} from '@reduxjs/toolkit';
-import counterReducer from './features/counterSlice';
 import paramReducer from './features/paramSlice';
+import editorReducer from './features/editorSlice';
+import optionActionReducer from './features/optionActionSlice';
+import requestResultReducer from './features/requestResultSlice';
 import {verbsApi} from './services/verbApi';
 import {setupListeners} from '@reduxjs/toolkit/dist/query';
 
 export const store = configureStore({
-  reducer: {counterReducer, paramReducer, [verbsApi.reducerPath]: verbsApi.reducer},
+  reducer: {
+    paramReducer,
+    editorReducer,
+    requestResultReducer,
+    optionActionReducer,
+    [verbsApi.reducerPath]: verbsApi.reducer,
+  },
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(verbsApi.middleware),
 });
 

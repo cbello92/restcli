@@ -23,6 +23,7 @@ export class ServerApplication {
   private config(): void {
     this.server.use(cors());
     this.server.use('/trpc', trpcExpress.createExpressMiddleware({router: appRouter, createContext}));
+
     if (process.env.NODE_ENV !== 'test') {
       this.database.run();
     }

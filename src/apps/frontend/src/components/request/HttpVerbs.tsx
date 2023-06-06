@@ -9,9 +9,12 @@ import Fade from '@mui/material/Fade';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import {useGetVerbsQuery} from '../../redux/services/verbApi';
 import {VerbHttpResponse} from '../../../../../Contexts/Backoffice/VerbsHttp/domain/response/VerbHttpResponse';
+import {setHttpMethod} from '../../redux/features/optionActionSlice';
+import {useAppDispatch} from '../../redux/hooks';
 
 export default function HttpVerbs() {
-  const {data} = useGetVerbsQuery();
+  const dispatch = useAppDispatch();
+  const {data: verbsHttp} = useGetVerbsQuery();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [optionSelected, setOptionSelected] = React.useState<VerbHttpResponse>({name: 'GET', color: '#73DC8C'});
@@ -20,8 +23,9 @@ export default function HttpVerbs() {
   };
   const handleClose = (event: React.MouseEvent<HTMLElement>) => {
     if (event.currentTarget.textContent) {
-      const option = data?.find(verb => verb.name === event.currentTarget.textContent) as VerbHttpResponse;
+      const option = verbsHttp?.find(verb => verb.name === event.currentTarget.textContent) as VerbHttpResponse;
       setOptionSelected(option);
+      dispatch(setHttpMethod(option.name));
     }
     setAnchorEl(null);
   };
@@ -47,7 +51,7 @@ export default function HttpVerbs() {
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        {data?.map((verb, index) => (
+        {verbsHttp?.map((verb, index) => (
           <MenuItem key={`${verb.name}${index}`} onClick={handleClose} style={{color: verb.color}}>
             {verb.name}
           </MenuItem>

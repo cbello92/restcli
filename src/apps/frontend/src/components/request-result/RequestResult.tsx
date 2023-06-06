@@ -10,7 +10,6 @@ export default function BasicGrid() {
       container
       mt={1}
       sx={{
-        height: '100%',
         marginLeft: 0,
         marginRight: 0,
         background: '#231f1f',

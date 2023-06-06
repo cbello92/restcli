@@ -2,7 +2,7 @@
 
 import {Box} from '@mui/material';
 import Sidebar from '../ui/Sidebar';
-import NewRequest from '../components/new-request/NewRequest';
+import Request from '../components/request/Request';
 import RequestResult from '../components/request-result/RequestResult';
 
 const page = () => {
@@ -21,7 +21,7 @@ const page = () => {
           height: '100vh',
         }}
       >
-        <NewRequest />
+        <Request />
         <RequestResult />
       </Box>
     </Box>

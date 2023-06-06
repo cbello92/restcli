@@ -11,6 +11,8 @@ import {useAppDispatch, useAppSelector} from '../../../redux/hooks';
 import {Checkbox, Grid} from '@mui/material';
 import Input from '@mui/material/Input';
 import DeleteIcon from '@mui/icons-material/Delete';
+import {setParamsQuery} from '../../../redux/features/optionActionSlice';
+import {useEffect} from 'react';
 
 const ariaLabel = {'aria-label': 'description'};
 
@@ -47,37 +49,59 @@ export default function Param({id, checked, name, value}: IParam) {
     dispatch(setValueParam({id: id, [target.name]: event.target.value}));
   };
 
+  useEffect(() => {
+    dispatch(setParamsQuery(params));
+  }, [params]);
+
   return (
     <Grid container spacing={1}>
       <Grid item xs={1.5} md={1.5}>
-        <Checkbox inputProps={{'aria-label': 'Checkbox demo'}} checked={checked} onChange={handleChangeChecked} />
+        <Checkbox
+          inputProps={{'aria-label': 'Checkbox demo'}}
+          checked={checked}
+          onChange={handleChangeChecked}
+          style={{padding: 5, border: 'none', color: !checked ? 'gray' : '#fff'}}
+        />
       </Grid>
       <Grid item xs={3.5} md={3.5}>
         <Input
-          id={id as string}
           name="name"
           placeholder="name"
           value={name}
           inputProps={ariaLabel}
-          style={{borderBottom: 0, borderColor: 'transparent', border: 0}}
+          style={{borderBottom: 0, borderBottomColor: 'transparent', border: 0, color: !checked ? 'gray' : '#fff'}}
           onKeyUp={handleKeyUp(id as string)}
           onChange={handleChange}
           autoComplete="off"
+          disableUnderline={true}
+          spellCheck={false}
         />
       </Grid>
       <Grid item xs={6} md={6}>
         <Input
           placeholder="value"
           inputProps={ariaLabel}
-          style={{width: '100%'}}
+          style={{width: '100%', color: !checked ? 'gray' : '#fff'}}
           name="value"
           value={value}
           onChange={handleChange}
           autoComplete="off"
+          disableUnderline={true}
+          spellCheck={false}
         />
       </Grid>
       {(name !== '' || value !== '') && (
-        <Grid item xs={1} md={1} style={{padding: 0, justifyContent: 'center', display: 'flex', placeItems: 'center'}}>
+        <Grid
+          item
+          xs={1}
+          md={1}
+          style={{
+            justifyContent: 'center',
+            display: 'flex',
+            placeItems: 'center',
+            color: !checked ? 'gray' : '#fff',
+          }}
+        >
           <DeleteIcon onClick={handleDeleteParam(id as string)} />
         </Grid>
       )}

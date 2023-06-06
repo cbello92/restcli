@@ -26,7 +26,6 @@ export default function OptionTab() {
           </TabList>
         </Box>
         <TabPanel value="1">
-          {/* <Param /> */}
           <ParamList />
         </TabPanel>
         <TabPanel value="2">
