@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {InputAction} from '../../../../../Contexts/Backoffice/EndpointExecutor/domain/OptionsAction';
 import {IParam} from './paramSlice';
+import {IHeader} from './headerSlice';
 
 const initialState: InputAction = {
   url: '',
@@ -31,8 +32,19 @@ export const optionActionSlice = createSlice({
       });
       state.value.params = paramsQuery;
     },
+    setHeadersQuery: (state, action: PayloadAction<IHeader[]>) => {
+      const headers = action.payload.filter(param => param.checked);
+      console.log('HEADERS FROM SLICE:::', headers);
+      const headersQuery: Record<string, string> = {};
+      headers.forEach(header => {
+        if (header.name) {
+          headersQuery[header.name] = header.value as string;
+        }
+      });
+      state.value.headers = headersQuery;
+    },
   },
 });
 
-export const {setUrlEndpoint, setParamsQuery, setHttpMethod} = optionActionSlice.actions;
+export const {setUrlEndpoint, setParamsQuery, setHttpMethod, setHeadersQuery} = optionActionSlice.actions;
 export default optionActionSlice.reducer;

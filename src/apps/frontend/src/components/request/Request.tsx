@@ -26,7 +26,7 @@ export default function Request() {
       dispatch(setStatusRequest(null));
       dispatch(setActiveRequest());
       dispatch(setLoadingResult());
-      const {data, status} = await trpc.endpointExecutor.endpointExecutor.query(optionsAction);
+      const {data, status} = await trpc.endpointExecutor.endpointExecutor.mutate(optionsAction);
       dispatch(setEditorValue(JSON.stringify(data, null, 2)));
       dispatch(setStatusRequest(status as number));
       console.log('send request', optionsAction, data);

@@ -11,7 +11,7 @@ const executorEndpointUseCase = new ExecutorEndpointUseCase();
 
 const endpointExecutor = publicProcedure
   .input((input: InputAction) => input)
-  .query(async ({input}) => {
+  .mutation(async ({input}) => {
     console.log('INPUT', input);
     const {headers, params, method} = input;
     return executorEndpointUseCase.execute(input.url, {method, headers, params});
