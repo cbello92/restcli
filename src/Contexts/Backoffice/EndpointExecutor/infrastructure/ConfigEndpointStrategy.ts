@@ -26,7 +26,6 @@ export class ConfigEndpointStrategy {
     console.log('METHOD', this.dataAction);
     const httpClientAxios = new HttpClientAxiosRepository();
     const EndpointHttp = this.classMap.get(this.dataAction.method);
-    console.log('EndpointHttp', EndpointHttp);
     const endpoint = new EndpointContext(new EndpointHttp(httpClientAxios));
     return await endpoint.execute(this.url, this.dataAction);
   }

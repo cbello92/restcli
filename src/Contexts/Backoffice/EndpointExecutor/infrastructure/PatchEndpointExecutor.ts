@@ -7,6 +7,7 @@ export class PatchEndpointExecutor implements EndpointStrategy {
   constructor(private httpClient: HttpClientBaseRepository) {}
 
   async execute(url: string, dataAction: OptionsAction): Promise<any> {
-    return this.httpClient.patch(url, {...dataAction});
+    const {body, ...rest} = dataAction;
+    return this.httpClient.patch(url, body, {...rest});
   }
 }

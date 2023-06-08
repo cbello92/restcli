@@ -29,7 +29,7 @@ export default function Request() {
       const {data, status} = await trpc.endpointExecutor.endpointExecutor.mutate(optionsAction);
       dispatch(setEditorValue(JSON.stringify(data, null, 2)));
       dispatch(setStatusRequest(status as number));
-      console.log('send request', optionsAction, data);
+      console.log('send request', data);
     } catch (error) {
       const errorCustom = error as unknown as ErrorRequest;
       console.log(JSON.stringify(error));

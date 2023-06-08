@@ -6,6 +6,6 @@ export class EndpointContext {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async execute(url: string, dataAction: InputAction): Promise<any> {
-    return await this.endpointStrategy.execute(url, dataAction);
+    return this.endpointStrategy.execute(url, dataAction);
   }
 }

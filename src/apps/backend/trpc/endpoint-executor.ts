@@ -13,8 +13,8 @@ const endpointExecutor = publicProcedure
   .input((input: InputAction) => input)
   .mutation(async ({input}) => {
     console.log('INPUT', input);
-    const {headers, params, method} = input;
-    return executorEndpointUseCase.execute(input.url, {method, headers, params});
+    const {url, ...rest} = input;
+    return executorEndpointUseCase.execute(url, {...rest});
   });
 
 export const endpointExecutorRouter = router({endpointExecutor});

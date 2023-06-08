@@ -3,7 +3,7 @@ import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-cloud9_night';
 import 'ace-builds/src-noconflict/ext-language_tools';
 import {useAppSelector} from '../../redux/hooks';
-import './Editor.css';
+import '../../ui/css/Editor.css';
 
 export default function Editor() {
   const value = useAppSelector(state => state.editorReducer.value);

@@ -7,6 +7,7 @@ export class PostEndpointExecutor implements EndpointStrategy {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async execute(url: string, dataAction: OptionsAction): Promise<any> {
-    return this.httpClient.post(url, {...dataAction});
+    const {body, ...rest} = dataAction;
+    return this.httpClient.post(url, body, {...rest});
   }
 }

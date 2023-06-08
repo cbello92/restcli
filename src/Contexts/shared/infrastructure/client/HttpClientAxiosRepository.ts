@@ -45,10 +45,11 @@ export class HttpClientAxiosRepository implements HttpClientBaseRepository {
       });
   }
 
-  put<V, T>(url: string, data: T, moreConfig?: Record<string, unknown>): Promise<V> {
+  put<V, T>(url: string, body: T, moreConfig?: Record<string, unknown>): Promise<V> {
     return axios
-      .put(url, data, {...moreConfig})
+      .put(url, body, {...moreConfig})
       .then(response => {
+        console.log('RESPONSE DATA:::', response.data);
         return Promise.resolve(<V>(<unknown>{data: response.data, status: response.status}));
       })
       .catch(error => {

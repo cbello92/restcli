@@ -7,6 +7,7 @@ export class PutEndpointExecutor implements EndpointStrategy {
   constructor(private httpClient: HttpClientBaseRepository) {}
 
   async execute(url: string, dataAction: OptionsAction): Promise<any> {
-    return this.httpClient.put(url, {...dataAction});
+    const {body, ...rest} = dataAction;
+    return this.httpClient.put(url, body, {...rest});
   }
 }
