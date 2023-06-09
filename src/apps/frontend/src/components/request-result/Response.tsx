@@ -5,7 +5,7 @@ import 'ace-builds/src-noconflict/ext-language_tools';
 import {useAppSelector} from '../../redux/hooks';
 import '../../ui/css/Editor.css';
 
-export default function Editor() {
+export default function Response() {
   const value = useAppSelector(state => state.editorReducer.value);
 
   return (

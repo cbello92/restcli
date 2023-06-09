@@ -10,7 +10,7 @@ import {useAppSelector} from '../../redux/hooks';
 import EmptyResult from './EmptyResult';
 import Loading from '../../ui/Loading';
 
-const Editor = lazy(() => import('../editor/Editor'));
+const Response = lazy(() => import('./Response'));
 
 export default function InformationResult() {
   const [value, setValue] = useState('2');
@@ -60,7 +60,7 @@ export default function InformationResult() {
         <TabPanel value="2" style={{paddingLeft: 0, paddingRight: 0, paddingBottom: 0, paddingTop: 0}}>
           {isLoadingResult && isActiveRequest && <Loading />}
           {!isActiveRequest && <EmptyResult />}
-          {isActiveRequest && !isLoadingResult && <Editor />}
+          {isActiveRequest && !isLoadingResult && <Response />}
         </TabPanel>
       </TabContext>
     </Box>
