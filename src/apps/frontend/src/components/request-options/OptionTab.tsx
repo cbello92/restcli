@@ -6,6 +6,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import ParamList from './params/ParamList';
 import HeaderList from './headers/HeaderList';
+import BodyEditor from './body/BodyEditor';
 
 export default function OptionTab() {
   const [value, setValue] = React.useState('1');
@@ -32,7 +33,9 @@ export default function OptionTab() {
           <HeaderList />
         </TabPanel>
         <TabPanel value="3">Auth</TabPanel>
-        <TabPanel value="4">Body</TabPanel>
+        <TabPanel value="4" style={{paddingLeft: 0, paddingRight: 0, paddingBottom: 0, paddingTop: 0}}>
+          <BodyEditor />
+        </TabPanel>
       </TabContext>
     </Box>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {InputAction} from '../../../../../Contexts/Backoffice/EndpointExecutor/domain/OptionsAction';
 import {IParam} from './paramSlice';
@@ -10,6 +11,15 @@ const initialState: InputAction = {
   params: {},
   body: '',
 };
+
+export function isJsonString(str: string) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
 
 export const optionActionSlice = createSlice({
   name: 'optionAction',
@@ -43,8 +53,13 @@ export const optionActionSlice = createSlice({
       });
       state.value.headers = headersQuery;
     },
+    setBody: (state, action: PayloadAction<any>) => {
+      if (action.payload !== '' && isJsonString(action.payload)) {
+        state.value.body = JSON.parse(action.payload);
+      }
+    },
   },
 });
 
-export const {setUrlEndpoint, setParamsQuery, setHttpMethod, setHeadersQuery} = optionActionSlice.actions;
+export const {setUrlEndpoint, setParamsQuery, setHttpMethod, setHeadersQuery, setBody} = optionActionSlice.actions;
 export default optionActionSlice.reducer;

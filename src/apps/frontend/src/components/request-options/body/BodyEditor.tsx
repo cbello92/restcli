@@ -1,12 +1,24 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import AceEditor from 'react-ace';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/theme-cloud9_night';
 import 'ace-builds/src-noconflict/ext-language_tools';
-import {useAppSelector} from '../../../redux/hooks';
 import '../../../ui/css/Editor.css';
+import {useAppDispatch} from '../../../redux/hooks';
+import {setBody} from '../../../redux/features/optionActionSlice';
+import {useEffect, useState} from 'react';
 
 export default function BodyEditor() {
-  const value = useAppSelector(state => state.editorReducer.value);
+  const [value, setValue] = useState('');
+  const dispatch = useAppDispatch();
+
+  const handleChange = (valueInput: string) => {
+    setValue(valueInput);
+  };
+
+  useEffect(() => {
+    dispatch(setBody(value));
+  }, [value]);
 
   return (
     <div style={{display: 'flex', height: '86vh', minHeight: '86vh'}}>
@@ -20,9 +32,9 @@ export default function BodyEditor() {
         height="100%"
         highlightActiveLine={false}
         value={value}
+        onChange={handleChange}
         setOptions={{
           wrap: true,
-          readOnly: true,
           cursorStyle: 'smooth',
           showGutter: true,
           useWorker: false,
