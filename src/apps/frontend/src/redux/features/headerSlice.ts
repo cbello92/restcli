@@ -17,7 +17,7 @@ const initialState: IHeader[] = [
   },
 ];
 
-export const headerSlice = createSlice({
+const headerSlice = createSlice({
   name: 'header',
   initialState: {value: initialState},
   reducers: {

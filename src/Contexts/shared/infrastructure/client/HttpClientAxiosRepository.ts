@@ -9,7 +9,7 @@ export class HttpClientAxiosRepository implements HttpClientBaseRepository {
         .get(url, {...moreConfig})
         // eslint-disable-next-line arrow-body-style
         .then(response => {
-          console.log(response.status);
+          console.log(response);
           return Promise.resolve(<V>(<unknown>{data: response.data, status: response.status}));
         })
         // eslint-disable-next-line arrow-body-style

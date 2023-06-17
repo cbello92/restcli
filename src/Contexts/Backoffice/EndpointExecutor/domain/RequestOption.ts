@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export interface OptionsAction {
+export interface IRequestOption {
   body?: any;
   headers?: Record<string, string>;
   params?: Record<string, string>;
 }
 
-export interface InputAction extends OptionsAction {
+export interface IRequestOptionExtra extends IRequestOption {
   url?: string;
   method?: string;
 }

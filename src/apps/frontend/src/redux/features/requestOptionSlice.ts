@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {InputAction} from '../../../../../Contexts/Backoffice/EndpointExecutor/domain/OptionsAction';
+import {IRequestOptionExtra} from '../../../../../Contexts/Backoffice/EndpointExecutor/domain/RequestOption';
 import {IParam} from './paramSlice';
 import {IHeader} from './headerSlice';
 
-const initialState: InputAction = {
+const initialState: IRequestOptionExtra = {
   url: '',
   method: 'GET',
   headers: {},
@@ -21,7 +21,7 @@ export function isJsonString(str: string) {
   return true;
 }
 
-export const optionActionSlice = createSlice({
+export const requestOptionSlice = createSlice({
   name: 'optionAction',
   initialState: {value: initialState},
   reducers: {
@@ -33,7 +33,6 @@ export const optionActionSlice = createSlice({
     },
     setParamsQuery: (state, action: PayloadAction<IParam[]>) => {
       const params = action.payload.filter(param => param.checked);
-      console.log('PARAMS FROM SLICE:::', params);
       const paramsQuery: Record<string, string> = {};
       params.forEach(param => {
         if (param.name) {
@@ -44,14 +43,24 @@ export const optionActionSlice = createSlice({
     },
     setHeadersQuery: (state, action: PayloadAction<IHeader[]>) => {
       const headers = action.payload.filter(param => param.checked);
-      console.log('HEADERS FROM SLICE:::', headers);
       const headersQuery: Record<string, string> = {};
       headers.forEach(header => {
         if (header.name) {
           headersQuery[header.name] = header.value as string;
         }
       });
+      if (state.value.headers?.Authorization) {
+        headersQuery['Authorization'] = state.value.headers['Authorization'];
+      }
       state.value.headers = headersQuery;
+    },
+    setHeaderPartial: (state, action: PayloadAction<Record<string, string>>) => {
+      state.value.headers = {...state.value.headers, ...action.payload};
+    },
+    deleteAuthorization: state => {
+      if (state.value.headers?.Authorization) {
+        delete state.value.headers?.Authorization;
+      }
     },
     setBody: (state, action: PayloadAction<any>) => {
       if (action.payload !== '' && isJsonString(action.payload)) {
@@ -61,5 +70,13 @@ export const optionActionSlice = createSlice({
   },
 });
 
-export const {setUrlEndpoint, setParamsQuery, setHttpMethod, setHeadersQuery, setBody} = optionActionSlice.actions;
-export default optionActionSlice.reducer;
+export const {
+  setUrlEndpoint,
+  setParamsQuery,
+  setHttpMethod,
+  setHeadersQuery,
+  setBody,
+  setHeaderPartial,
+  deleteAuthorization,
+} = requestOptionSlice.actions;
+export default requestOptionSlice.reducer;

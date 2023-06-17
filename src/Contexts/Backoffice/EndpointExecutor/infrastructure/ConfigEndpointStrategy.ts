@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import {HttpClientAxiosRepository} from '../../../shared/infrastructure/client/HttpClientAxiosRepository';
-import {InputAction} from '../domain/OptionsAction';
+import {IRequestOptionExtra} from '../domain/RequestOption';
 import {DeleteEndpointExecutor} from './DeleteEndpointExecutor';
 import {EndpointContext} from './EndpointContext';
 import {GetEndpointExecutor} from './GetEndpointExecutor';
@@ -14,7 +14,7 @@ type ClassConstructor<T> = new (...args: any[]) => T;
 export class ConfigEndpointStrategy {
   classMap = new Map<string, ClassConstructor<any>>();
 
-  constructor(private url: string, private dataAction: InputAction) {
+  constructor(private url: string, private dataAction: IRequestOptionExtra) {
     this.classMap.set('GET', GetEndpointExecutor);
     this.classMap.set('POST', PostEndpointExecutor);
     this.classMap.set('PUT', PutEndpointExecutor);

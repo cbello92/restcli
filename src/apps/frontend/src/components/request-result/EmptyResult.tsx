@@ -6,9 +6,9 @@ const EmptyResult = () => {
     <div style={{minHeight: '86vh', display: 'grid', placeContent: 'center'}}>
       <div style={{display: 'grid', placeContent: 'center'}}>
         <div style={{display: 'flex', justifyContent: 'center'}}>
-          <OutputIcon style={{fontSize: '74px'}} />
+          <OutputIcon style={{fontSize: '74px', color: 'gray'}} />
         </div>
-        <div style={{display: 'flex', justifyContent: 'center'}}>Not sent</div>
+        <div style={{display: 'flex', justifyContent: 'center', color: 'gray'}}>Not sent</div>
       </div>
     </div>
   );

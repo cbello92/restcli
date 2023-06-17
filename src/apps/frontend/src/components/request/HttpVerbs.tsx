@@ -9,7 +9,7 @@ import Fade from '@mui/material/Fade';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import {useGetVerbsQuery} from '../../redux/services/verbApi';
 import {VerbHttpResponse} from '../../../../../Contexts/Backoffice/VerbsHttp/domain/response/VerbHttpResponse';
-import {setHttpMethod} from '../../redux/features/optionActionSlice';
+import {setHttpMethod} from '../../redux/features/requestOptionSlice';
 import {useAppDispatch} from '../../redux/hooks';
 
 export default function HttpVerbs() {

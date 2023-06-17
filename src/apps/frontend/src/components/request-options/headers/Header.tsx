@@ -12,7 +12,7 @@ import {Checkbox, Grid} from '@mui/material';
 import Input from '@mui/material/Input';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {useEffect} from 'react';
-import {setHeadersQuery} from '../../../redux/features/optionActionSlice';
+import {setHeadersQuery} from '../../../redux/features/requestOptionSlice';
 
 const ariaLabel = {'aria-label': 'description'};
 
@@ -29,7 +29,6 @@ export default function Header({id, checked, name, value}: IHeader) {
     }
     if (event.currentTarget.value.length === 1) {
       const paramIndex = headers.findIndex(param => param.id === id);
-      console.log('PARAMETERS', headers);
       if (paramIndex === headers.length - 1 || headers.length === 1) {
         dispatch(addHeader({name: '', value: ''}));
       }

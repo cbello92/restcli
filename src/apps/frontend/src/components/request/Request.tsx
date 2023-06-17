@@ -5,7 +5,7 @@ import SendIcon from '@mui/icons-material/Send';
 import HttpVerbs from './HttpVerbs';
 import {Button} from '@mui/material';
 import {useDispatch} from 'react-redux';
-import {setUrlEndpoint} from '../../redux/features/optionActionSlice';
+import {setUrlEndpoint} from '../../redux/features/requestOptionSlice';
 import {useAppSelector} from '../../redux/hooks';
 import {trpc} from '../../utils/trpc';
 import {setEditorValue} from '../../redux/features/editorSlice';

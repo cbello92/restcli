@@ -2,8 +2,11 @@ import {configureStore} from '@reduxjs/toolkit';
 import paramReducer from './features/paramSlice';
 import headerReducer from './features/headerSlice';
 import editorReducer from './features/editorSlice';
-import optionActionReducer from './features/optionActionSlice';
+import optionActionReducer from './features/requestOptionSlice';
 import requestResultReducer from './features/requestResultSlice';
+import authSelectedReducer from './features/authSelectedSlice';
+import basicAuthReducer from './features/authSlice';
+
 import {verbsApi} from './services/verbApi';
 import {setupListeners} from '@reduxjs/toolkit/dist/query';
 
@@ -13,6 +16,8 @@ export const store = configureStore({
     headerReducer,
     editorReducer,
     requestResultReducer,
+    authSelectedReducer,
+    basicAuthReducer,
     optionActionReducer,
     [verbsApi.reducerPath]: verbsApi.reducer,
   },

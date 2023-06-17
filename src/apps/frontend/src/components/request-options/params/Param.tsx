@@ -11,7 +11,7 @@ import {useAppDispatch, useAppSelector} from '../../../redux/hooks';
 import {Checkbox, Grid} from '@mui/material';
 import Input from '@mui/material/Input';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {setParamsQuery} from '../../../redux/features/optionActionSlice';
+import {setParamsQuery} from '../../../redux/features/requestOptionSlice';
 import {useEffect} from 'react';
 
 const ariaLabel = {'aria-label': 'description'};

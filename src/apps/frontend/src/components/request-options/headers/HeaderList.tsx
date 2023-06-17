@@ -5,6 +5,7 @@ import Header from './Header';
 
 const HeaderList = () => {
   const headers = useAppSelector(state => state.headerReducer.value);
+
   return (
     <div>
       {headers.length > 0 &&

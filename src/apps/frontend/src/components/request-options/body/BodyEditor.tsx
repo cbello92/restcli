@@ -5,7 +5,7 @@ import 'ace-builds/src-noconflict/theme-cloud9_night';
 import 'ace-builds/src-noconflict/ext-language_tools';
 import '../../../ui/css/Editor.css';
 import {useAppDispatch} from '../../../redux/hooks';
-import {setBody} from '../../../redux/features/optionActionSlice';
+import {setBody} from '../../../redux/features/requestOptionSlice';
 import {useEffect, useState} from 'react';
 
 export default function BodyEditor() {

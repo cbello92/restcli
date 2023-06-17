@@ -1,16 +1,16 @@
 import {publicProcedure, router} from './trpc-config';
-import {InputAction, OptionsAction} from '../../../Contexts/Backoffice/EndpointExecutor/domain/OptionsAction';
+import {IRequestOptionExtra, IRequestOption} from '../../../Contexts/Backoffice/EndpointExecutor/domain/RequestOption';
 import {ExecutorEndpointUseCase} from '../../../Contexts/Backoffice/EndpointExecutor/application/ExecutorEndpointUseCase';
 
 export interface InputActionRequest {
   url: string;
-  optionsAction: OptionsAction;
+  optionsAction: IRequestOption;
 }
 
 const executorEndpointUseCase = new ExecutorEndpointUseCase();
 
 const endpointExecutor = publicProcedure
-  .input((input: InputAction) => input)
+  .input((input: IRequestOptionExtra) => input)
   .mutation(async ({input}) => {
     console.log('INPUT', input);
     const {url, ...rest} = input;
