@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
-import OptionTab from '../request-options/OptionTab';
+import RequestOptionTab from '../request-options/RequestOptionTab';
 import InformationResult from './InformationResult';
 import {Divider} from '@mui/material';
 
@@ -18,7 +18,7 @@ export default function BasicGrid() {
       }}
     >
       <Grid xs={12} md={4}>
-        <OptionTab />
+        <RequestOptionTab />
       </Grid>
       <Divider orientation="vertical" flexItem></Divider>
       <Grid xs={12} md={7.9}>

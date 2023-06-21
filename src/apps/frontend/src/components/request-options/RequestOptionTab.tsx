@@ -11,7 +11,7 @@ import {useAppSelector} from '../../redux/hooks';
 
 const BodyEditor = React.lazy(() => import('./body/BodyEditor'));
 
-export default function OptionTab() {
+export default function RequestOptionTab() {
   const [value, setValue] = React.useState('1');
   const params = useAppSelector(state => state.paramReducer.value);
   const sizeParams = params.filter(param => param.checked).length;
