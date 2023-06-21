@@ -64,6 +64,7 @@ export default function Header({id, checked, name, value}: IHeader) {
       </Grid>
       <Grid item xs={3.5} md={3.5}>
         <Input
+          multiline
           name="name"
           placeholder="name"
           value={name}
@@ -78,6 +79,7 @@ export default function Header({id, checked, name, value}: IHeader) {
       </Grid>
       <Grid item xs={6} md={6}>
         <Input
+          multiline
           placeholder="value"
           inputProps={ariaLabel}
           style={{width: '100%', color: !checked ? 'gray' : '#fff'}}

@@ -35,7 +35,6 @@ export default function InformationResult() {
       <TabContext value={value}>
         <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
           <TabList
-            textColor="secondary"
             onChange={handleChange}
             aria-label="lab API tabs example"
             TabIndicatorProps={{style: {backgroundColor: '#231f1f', borderBottom: 'none', color: 'white'}}}

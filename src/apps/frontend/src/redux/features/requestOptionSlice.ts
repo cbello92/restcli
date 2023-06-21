@@ -31,7 +31,7 @@ export const requestOptionSlice = createSlice({
     setHttpMethod: (state, action: PayloadAction<string>) => {
       state.value.method = action.payload;
     },
-    setParamsQuery: (state, action: PayloadAction<IParam[]>) => {
+    setParamsQueryChecked: (state, action: PayloadAction<IParam[]>) => {
       const params = action.payload.filter(param => param.checked);
       const paramsQuery: Record<string, string> = {};
       params.forEach(param => {
@@ -72,7 +72,7 @@ export const requestOptionSlice = createSlice({
 
 export const {
   setUrlEndpoint,
-  setParamsQuery,
+  setParamsQueryChecked,
   setHttpMethod,
   setHeadersQuery,
   setBody,

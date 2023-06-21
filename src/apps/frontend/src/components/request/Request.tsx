@@ -11,25 +11,35 @@ import {trpc} from '../../utils/trpc';
 import {setEditorValue} from '../../redux/features/editorSlice';
 import {setActiveRequest, setLoadingResult, setStatusRequest} from '../../redux/features/requestResultSlice';
 import {ErrorRequest} from '../../entity/ErrorRequest';
+import {transformParamsFromObject} from '../../redux/features/paramSlice';
+import {getParamsQuery, getUrlObject, isValidUrl} from '../request-options/url/urlHelper';
 
 export default function Request() {
   const dispatch = useDispatch();
   const optionsAction = useAppSelector(state => state.optionActionReducer.value);
 
   const handleSetUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setUrlEndpoint(e.target.value));
+    let url = e.target.value;
+    if (isValidUrl(e.target.value)) {
+      const {origin, pathname, search} = getUrlObject(e.target.value);
+      const queryParam = getParamsQuery(search);
+      dispatch(transformParamsFromObject(queryParam));
+      url = `${origin}${pathname}`;
+    }
+
+    dispatch(setUrlEndpoint(url));
   };
 
   const handleSendRequest = async () => {
     try {
-      console.log(optionsAction);
+      console.log('REQUEST_OPTIONS:::', optionsAction);
       dispatch(setStatusRequest(null));
       dispatch(setActiveRequest());
       dispatch(setLoadingResult());
       const {data, status} = await trpc.endpointExecutor.endpointExecutor.mutate(optionsAction);
       dispatch(setEditorValue(JSON.stringify(data, null, 2)));
       dispatch(setStatusRequest(status as number));
-      console.log('send request', data);
+      console.log('SEND_REQUEST:::', data);
     } catch (error) {
       const errorCustom = error as unknown as ErrorRequest;
       console.log(JSON.stringify(error));
@@ -50,6 +60,8 @@ export default function Request() {
     handleSendRequest();
   };
 
+  console.log(optionsAction.url);
+
   return (
     <Paper
       variant="outlined"
@@ -68,6 +80,9 @@ export default function Request() {
     >
       <HttpVerbs />
       <InputBase
+        // multiline
+        value={optionsAction.url ?? ''}
+        // defaultValue={optionsAction.url ?? ''}
         onChange={handleSetUrl}
         sx={{ml: 1, flex: 1}}
         placeholder="Enter your request"

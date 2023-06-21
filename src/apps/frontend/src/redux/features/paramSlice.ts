@@ -21,6 +21,16 @@ export const paramSlice = createSlice({
   name: 'param',
   initialState: {value: initialState},
   reducers: {
+    transformParamsFromObject: (state, action: PayloadAction<Record<string, string>>) => {
+      const queryParam = action.payload;
+      const keysParam = Object.keys(queryParam);
+      if (keysParam.length > 0) {
+        const params: IParam[] = keysParam.map(key => {
+          return {id: uuidv4(), name: key, value: queryParam[key], checked: true};
+        });
+        state.value = [...params, {id: uuidv4(), checked: false, name: '', value: ''}];
+      }
+    },
     addParam: (state, action: PayloadAction<IParam>) => {
       state.value.push({id: uuidv4(), checked: false, ...action.payload});
     },
@@ -51,5 +61,8 @@ export const paramSlice = createSlice({
   },
 });
 
-export const {addParam, setParamCheckedActive, setChecked, setValueParam, deleteParam} = paramSlice.actions;
+export const {
+addParam, setParamCheckedActive, setChecked, setValueParam, deleteParam, transformParamsFromObject,
+} =
+  paramSlice.actions;
 export default paramSlice.reducer;

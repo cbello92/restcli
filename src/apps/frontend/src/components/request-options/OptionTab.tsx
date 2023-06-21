@@ -7,11 +7,14 @@ import TabPanel from '@mui/lab/TabPanel';
 import ParamList from './params/ParamList';
 import HeaderList from './headers/HeaderList';
 import Auth from './auth/Auth';
+import {useAppSelector} from '../../redux/hooks';
 
 const BodyEditor = React.lazy(() => import('./body/BodyEditor'));
 
 export default function OptionTab() {
   const [value, setValue] = React.useState('1');
+  const params = useAppSelector(state => state.paramReducer.value);
+  const sizeParams = params.filter(param => param.checked).length;
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -21,8 +24,16 @@ export default function OptionTab() {
     <Box sx={{width: '100%', typography: 'body1'}}>
       <TabContext value={value}>
         <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab style={{textTransform: 'capitalize'}} label="Params" value="1" />
+          <TabList
+            onChange={handleChange}
+            aria-label="tabs request options"
+            TabIndicatorProps={{style: {backgroundColor: '#231f1f', borderBottom: 'none', color: 'white', fontWeight: 'bold'}}}
+          >
+            <Tab
+              style={{textTransform: 'capitalize'}}
+              label={<div>Params {sizeParams > 0 && <span style={{color: '#73DC8C'}}>{sizeParams}</span>}</div>}
+              value="1"
+            />
             <Tab style={{textTransform: 'capitalize'}} label="Headers" value="2" />
             <Tab style={{textTransform: 'capitalize'}} label="Auth" value="3" />
             <Tab style={{textTransform: 'capitalize'}} label="Body" value="4" />

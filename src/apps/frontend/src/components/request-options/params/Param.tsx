@@ -11,7 +11,7 @@ import {useAppDispatch, useAppSelector} from '../../../redux/hooks';
 import {Checkbox, Grid} from '@mui/material';
 import Input from '@mui/material/Input';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {setParamsQuery} from '../../../redux/features/requestOptionSlice';
+import {setParamsQueryChecked} from '../../../redux/features/requestOptionSlice';
 import {useEffect} from 'react';
 
 const ariaLabel = {'aria-label': 'description'};
@@ -29,7 +29,6 @@ export default function Param({id, checked, name, value}: IParam) {
     }
     if (event.currentTarget.value.length === 1) {
       const paramIndex = params.findIndex(param => param.id === id);
-      console.log('PARAMETERS', params);
       if (paramIndex === params.length - 1 || params.length === 1) {
         dispatch(addParam({name: '', value: ''}));
       }
@@ -50,7 +49,7 @@ export default function Param({id, checked, name, value}: IParam) {
   };
 
   useEffect(() => {
-    dispatch(setParamsQuery(params));
+    dispatch(setParamsQueryChecked(params));
   }, [params]);
 
   return (
@@ -65,6 +64,7 @@ export default function Param({id, checked, name, value}: IParam) {
       </Grid>
       <Grid item xs={3.5} md={3.5}>
         <Input
+          multiline
           name="name"
           placeholder="name"
           value={name}
@@ -79,6 +79,7 @@ export default function Param({id, checked, name, value}: IParam) {
       </Grid>
       <Grid item xs={6} md={6}>
         <Input
+          multiline
           placeholder="value"
           inputProps={ariaLabel}
           style={{width: '100%', color: !checked ? 'gray' : '#fff'}}
