@@ -1,5 +1,5 @@
 import {configureStore} from '@reduxjs/toolkit';
-import paramReducer from './features/paramSlice';
+import urlParamReducer from './features/urlParamSlice';
 import headerReducer from './features/headerSlice';
 import editorReducer from './features/editorSlice';
 import optionActionReducer from './features/requestOptionSlice';
@@ -12,7 +12,7 @@ import {setupListeners} from '@reduxjs/toolkit/dist/query';
 
 export const store = configureStore({
   reducer: {
-    paramReducer,
+    urlParamReducer,
     headerReducer,
     editorReducer,
     requestResultReducer,

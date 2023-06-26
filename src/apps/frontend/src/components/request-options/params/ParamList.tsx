@@ -4,7 +4,7 @@ import {useAppSelector} from '../../../redux/hooks';
 import Param from './Param';
 
 const ParamList = () => {
-  const params = useAppSelector(state => state.paramReducer.value);
+  const params = useAppSelector(state => state.urlParamReducer.value.params);
   return (
     <div>
       {params.length > 0 &&

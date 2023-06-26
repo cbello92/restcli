@@ -11,43 +11,49 @@ import {trpc} from '../../utils/trpc';
 import {setEditorValue} from '../../redux/features/editorSlice';
 import {setActiveRequest, setLoadingResult, setStatusRequest} from '../../redux/features/requestResultSlice';
 import {ErrorRequest} from '../../entity/ErrorRequest';
-import {transformParamsFromObject} from '../../redux/features/paramSlice';
+import {setUrlUi, transformParamsFromObject} from '../../redux/features/urlParamSlice';
 import {getParamsQuery, getUrlObject, isValidUrl} from '../request-options/url/urlHelper';
 
 export default function Request() {
   const dispatch = useDispatch();
   const optionsAction = useAppSelector(state => state.optionActionReducer.value);
+  const urlUi = useAppSelector(state => state.urlParamReducer.value.url);
 
-  const handleSetUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let url = e.target.value;
-    if (isValidUrl(e.target.value)) {
-      const {origin, pathname, search} = getUrlObject(e.target.value);
+  const handleSetUrl = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const url = e.target.value;
+    if (isValidUrl(url)) {
+      const {search} = getUrlObject(url);
       const queryParam = getParamsQuery(search);
       dispatch(transformParamsFromObject(queryParam));
-      url = `${origin}${pathname}`;
+    } else {
+      dispatch(transformParamsFromObject({}));
     }
-
-    dispatch(setUrlEndpoint(url));
+    dispatch(setUrlUi(url));
+    dispatch(setUrlEndpoint(url.split('?')[0]));
   };
 
   const handleSendRequest = async () => {
-    try {
-      console.log('REQUEST_OPTIONS:::', optionsAction);
-      dispatch(setStatusRequest(null));
-      dispatch(setActiveRequest());
-      dispatch(setLoadingResult());
-      const {data, status} = await trpc.endpointExecutor.endpointExecutor.mutate(optionsAction);
-      dispatch(setEditorValue(JSON.stringify(data, null, 2)));
-      dispatch(setStatusRequest(status as number));
-      console.log('SEND_REQUEST:::', data);
-    } catch (error) {
-      const errorCustom = error as unknown as ErrorRequest;
-      console.log(JSON.stringify(error));
-      console.log(errorCustom?.data?.cause.statusCode);
-      dispatch(setStatusRequest(errorCustom?.data?.cause.statusCode as number));
-      dispatch(setEditorValue(JSON.stringify(errorCustom.data?.cause?.data, null, 2)));
-    } finally {
-      dispatch(setLoadingResult());
+    if (optionsAction.url && isValidUrl(optionsAction.url)) {
+      try {
+        console.log('REQUEST_OPTIONS:::', optionsAction);
+        dispatch(setStatusRequest(null));
+        dispatch(setActiveRequest());
+        dispatch(setLoadingResult());
+        const {data, status} = await trpc.endpointExecutor.endpointExecutor.mutate(optionsAction);
+        dispatch(setEditorValue(JSON.stringify(data, null, 2)));
+        dispatch(setStatusRequest(status as number));
+        console.log('SEND_REQUEST:::', data);
+      } catch (error) {
+        const errorCustom = error as unknown as ErrorRequest;
+        console.log(errorCustom?.data);
+        console.log(errorCustom?.data?.cause);
+        dispatch(setStatusRequest((errorCustom?.data?.cause.statusCode as number) || 500));
+        dispatch(
+          setEditorValue(JSON.stringify(errorCustom.data?.cause?.data ?? errorCustom.data?.cause?.message, null, 2)),
+        );
+      } finally {
+        dispatch(setLoadingResult());
+      }
     }
   };
 
@@ -59,8 +65,6 @@ export default function Request() {
     e.preventDefault();
     handleSendRequest();
   };
-
-  console.log(optionsAction.url);
 
   return (
     <Paper
@@ -80,9 +84,7 @@ export default function Request() {
     >
       <HttpVerbs />
       <InputBase
-        // multiline
-        value={optionsAction.url ?? ''}
-        // defaultValue={optionsAction.url ?? ''}
+        value={urlUi}
         onChange={handleSetUrl}
         sx={{ml: 1, flex: 1}}
         placeholder="Enter your request"

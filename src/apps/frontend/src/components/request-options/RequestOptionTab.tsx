@@ -13,7 +13,7 @@ const BodyEditor = React.lazy(() => import('./body/BodyEditor'));
 
 export default function RequestOptionTab() {
   const [value, setValue] = React.useState('1');
-  const params = useAppSelector(state => state.paramReducer.value);
+  const params = useAppSelector(state => state.urlParamReducer.value.params);
   const sizeParams = params.filter(param => param.checked).length;
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {

@@ -5,8 +5,9 @@ import {
   deleteParam,
   setChecked,
   setParamCheckedActive,
+  setUrlParams,
   setValueParam,
-} from '../../../redux/features/paramSlice';
+} from '../../../redux/features/urlParamSlice';
 import {useAppDispatch, useAppSelector} from '../../../redux/hooks';
 import {Checkbox, Grid} from '@mui/material';
 import Input from '@mui/material/Input';
@@ -18,7 +19,7 @@ const ariaLabel = {'aria-label': 'description'};
 
 export default function Param({id, checked, name, value}: IParam) {
   const dispatch = useAppDispatch();
-  const params = useAppSelector(state => state.paramReducer.value);
+  const params = useAppSelector(state => state.urlParamReducer.value.params);
 
   const handleKeyUp = (id: string) => (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (event.currentTarget.value !== '') {
@@ -50,6 +51,7 @@ export default function Param({id, checked, name, value}: IParam) {
 
   useEffect(() => {
     dispatch(setParamsQueryChecked(params));
+    dispatch(setUrlParams(params));
   }, [params]);
 
   return (
