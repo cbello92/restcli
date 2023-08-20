@@ -7,5 +7,5 @@ export const setUrlWithParams = (url: string, params: IParam[]) => {
     paramObj = {...paramObj, [param.name as string]: param.value};
   });
   const search = new URLSearchParams(paramObj).toString();
-  return url.replace(/(?<=\?).*/, search);
+  return search !== '' ? url.replace(/(\?.*)?$/, '?' + search) : url.replace(/\?.*/, '');
 };

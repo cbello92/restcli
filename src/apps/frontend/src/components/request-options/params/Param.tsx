@@ -1,57 +1,14 @@
 /* eslint-disable no-undef */
-import {
-  addParam,
-  deleteParam,
-  setChecked,
-  setParamCheckedActive,
-  setValueParam,
-} from '../../../redux/features/urlParamSlice';
-import {useAppDispatch, useAppSelector} from '../../../redux/hooks';
 import {Checkbox, Grid} from '@mui/material';
 import Input from '@mui/material/Input';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {setParamsQueryChecked} from '../../../redux/features/requestOptionSlice';
-import {useEffect} from 'react';
 import {IParam} from '../../../redux/entity/params.interface';
+import {useParam} from '../../../hooks/useParam';
 
 const ariaLabel = {'aria-label': 'description'};
 
 export default function Param({id, checked, name, value}: IParam) {
-  const dispatch = useAppDispatch();
-  const params = useAppSelector(state => state.urlParamReducer.value.params);
-
-  const handleKeyUp = (id: string) => (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (event.currentTarget.value !== '') {
-      dispatch(setParamCheckedActive(id));
-    }
-    if (event.currentTarget.value === '' && params.length > 1) {
-      dispatch(deleteParam(id));
-    }
-    if (event.currentTarget.value.length === 1) {
-      const paramIndex = params.findIndex(param => param.id === id);
-      if (paramIndex === params.length - 1 || params.length === 1) {
-        dispatch(addParam({name: '', value: ''}));
-      }
-    }
-  };
-
-  const handleChangeChecked = () => {
-    dispatch(setChecked(id as string));
-  };
-
-  const handleDeleteParam = (id: string) => () => {
-    dispatch(deleteParam(id));
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const target = event.target;
-    dispatch(setValueParam({id: id, [target.name]: event.target.value}));
-  };
-
-  useEffect(() => {
-    dispatch(setParamsQueryChecked(params));
-    // dispatch(setUrlParams(params));
-  }, [params]);
+  const {handleChange, handleChangeChecked, handleDeleteParam, handleKeyUp} = useParam(id as string);
 
   return (
     <Grid container spacing={1}>
@@ -71,7 +28,7 @@ export default function Param({id, checked, name, value}: IParam) {
           value={name}
           inputProps={ariaLabel}
           style={{borderBottom: 0, borderBottomColor: 'transparent', border: 0, color: !checked ? 'gray' : '#fff'}}
-          onKeyUp={handleKeyUp(id as string)}
+          onKeyUp={handleKeyUp()}
           onChange={handleChange}
           autoComplete="off"
           disableUnderline={true}
@@ -104,7 +61,7 @@ export default function Param({id, checked, name, value}: IParam) {
             color: !checked ? 'gray' : '#fff',
           }}
         >
-          <DeleteIcon onClick={handleDeleteParam(id as string)} />
+          <DeleteIcon onClick={handleDeleteParam()} />
         </Grid>
       )}
     </Grid>
