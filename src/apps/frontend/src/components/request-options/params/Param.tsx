@@ -1,11 +1,9 @@
 /* eslint-disable no-undef */
 import {
-  IParam,
   addParam,
   deleteParam,
   setChecked,
   setParamCheckedActive,
-  setUrlParams,
   setValueParam,
 } from '../../../redux/features/urlParamSlice';
 import {useAppDispatch, useAppSelector} from '../../../redux/hooks';
@@ -14,6 +12,7 @@ import Input from '@mui/material/Input';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {setParamsQueryChecked} from '../../../redux/features/requestOptionSlice';
 import {useEffect} from 'react';
+import {IParam} from '../../../redux/entity/params.interface';
 
 const ariaLabel = {'aria-label': 'description'};
 
@@ -51,7 +50,7 @@ export default function Param({id, checked, name, value}: IParam) {
 
   useEffect(() => {
     dispatch(setParamsQueryChecked(params));
-    dispatch(setUrlParams(params));
+    // dispatch(setUrlParams(params));
   }, [params]);
 
   return (

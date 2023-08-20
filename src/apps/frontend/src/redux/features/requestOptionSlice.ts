@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {IRequestOptionExtra} from '../../../../../Contexts/Backoffice/EndpointExecutor/domain/RequestOption';
-import {IParam} from './paramSlice';
 import {IHeader} from './headerSlice';
+import {IParam} from '../entity/params.interface';
 
 const initialState: IRequestOptionExtra = {
   url: '',

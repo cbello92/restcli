@@ -1,19 +1,8 @@
 /* eslint-disable max-len */
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {v4 as uuidv4} from 'uuid';
-
-export interface IParam {
-  id?: string;
-  checked?: boolean;
-  name?: string;
-  value?: string;
-}
-
-export interface IUrlParams {
-  params: IParam[];
-  url: string;
-  searchPlain?: string;
-}
+import {IParam, IUrlParams} from '../entity/params.interface';
+import {setUrlWithParams} from '../util/setUrlParams';
 
 const initialState: IUrlParams = {
   url: '',
@@ -37,6 +26,7 @@ export const urlParamsSlice = createSlice({
       const params: IParam[] = keysParam.map(key => {
         return {id: uuidv4(), name: key, value: queryParam[key], checked: true};
       });
+      state.value.url = setUrlWithParams(state.value.url, params);
       state.value.params = [...params, {id: uuidv4(), checked: false, name: '', value: ''}];
     },
     addParam: (state, action: PayloadAction<IParam>) => {
@@ -46,6 +36,7 @@ export const urlParamsSlice = createSlice({
       const index = state.value.params.findIndex(param => param.id === action.payload);
       if (index > -1) {
         state.value.params[index].checked = true;
+        state.value.url = setUrlWithParams(state.value.url, state.value.params);
       }
     },
     setChecked: (state, action: PayloadAction<string>) => {
@@ -53,32 +44,25 @@ export const urlParamsSlice = createSlice({
       if (index > -1) {
         const newStatusChecked = !state.value.params[index].checked;
         state.value.params[index].checked = newStatusChecked;
+        state.value.url = setUrlWithParams(state.value.url, state.value.params);
       }
     },
     setValueParam: (state, action: PayloadAction<IParam>) => {
       const index = state.value.params.findIndex(param => param.id === action.payload.id);
       if (index > -1) {
         state.value.params[index] = {...state.value.params[index], ...action.payload};
+        state.value.url = setUrlWithParams(state.value.url, state.value.params);
       }
     },
     deleteParam: (state, action: PayloadAction<string>) => {
       const index = state.value.params.findIndex(param => param.id === action.payload);
       if (index > -1 && state.value.params.length - 1 !== index) {
         state.value.params.splice(index, 1);
+        state.value.url = setUrlWithParams(state.value.url, state.value.params);
       }
     },
     setUrlUi: (state, action: PayloadAction<string>) => {
       state.value.url = action.payload;
-    },
-    setUrlParams: (state, action: PayloadAction<IParam[]>) => {
-      const paramsFilter = action.payload.filter(param => param.checked === true);
-      let paramObj = {};
-      paramsFilter.forEach(param => {
-        paramObj = {...paramObj, [param.name as string]: param.value};
-      });
-
-      const search = new URLSearchParams(paramObj).toString();
-      state.value.url = `${state.value.url.split('?')[0]}${search === '' ? '' : `?${search}`}`;
     },
   },
 });
@@ -91,6 +75,5 @@ export const {
   deleteParam,
   transformParamsFromObject,
   setUrlUi,
-  setUrlParams,
 } = urlParamsSlice.actions;
 export default urlParamsSlice.reducer;
